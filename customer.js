@@ -10,11 +10,11 @@ const readline = require("readline").createInterface({
 var customer = new net.Socket();
 
 customer.connect(PORT, HOST, function () {
-  customer.write('customer');
+  customer.write("customer");
 });
 
 customer.on("data", function (data) {
-  console.log(data.toString())
+  console.log(data.toString());
   readline.question("Select Product: ", (input) => {
     customer.write(input);
   });
