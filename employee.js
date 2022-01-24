@@ -15,7 +15,8 @@ employee.connect(PORT,HOST,function(){
 })
 
 employee.on('data',function(data){
-    readline.question(data + '\n',input=>{
+    console.log(data.toString())
+    readline.question('Add Product: ',input=>{
         employee.write(input)
     })
     

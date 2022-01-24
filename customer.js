@@ -14,7 +14,8 @@ customer.connect(PORT, HOST, function () {
 });
 
 customer.on("data", function (data) {
-  readline.question(data + "\n", (input) => {
+  console.log(data.toString())
+  readline.question("Select Product: ", (input) => {
     customer.write(input);
   });
 });
