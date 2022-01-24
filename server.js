@@ -1,4 +1,3 @@
-const { Socket } = require("dgram");
 var net = require("net");
 var HOST = "127.0.0.1";
 var PORT = 6969;
@@ -27,16 +26,13 @@ net
     sock.on("employee", function () {
       switch (stateEMP) {
         case 0:
-          sock.write("Ready for Employee client.");
+          sock.write("Ready for Employee client");
           stateEMP = 1;
           break;
         case 1:
           productList.push(txt);
-          console.log("Employee add product success.");
+          console.log("Employee add product success");
           sock.write("Num of Product is " + productList.length);
-          break;
-        case 2:
-          console.log("case 3");
           break;
       }
     });
@@ -49,6 +45,7 @@ net
           break;
         case 1:
           if (txt == "order") {
+            sock.emit("success");
             stateCTM = 2;
           } else {
             for (var i = 0; i < productList.length; i++) {
@@ -58,18 +55,20 @@ net
             }
             if (isHasProduct) {
               selectProductList.push(txt);
-              console.log("Customer select product success.");
-              sock.write("Select " + txt + " success.");
+              console.log("Customer select product success");
+              sock.write("Success to select " + txt);
               isHasProduct = false;
             } else {
+              console.log("Customer failed to select " + txt);
               sock.write("Failed to select " + txt);
             }
           }
           break;
-        case 2:
-          sock.write("Order success.");
-          break;
       }
+    });
+
+    sock.on("success", function () {
+      sock.write("Order success");
     });
   })
   .listen(PORT, HOST);
